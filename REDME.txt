@@ -1,0 +1,37 @@
+--　プロフィールテーブルを作成
+create table profiles(
+  id uuid primary key references auth.users on delete cascade,
+  email text not null,
+  name text,
+  introduce text,
+  avata_url text
+);
+
+-- profilesテーブルRLS検定
+alter table profiles enable row level security;
+create policy "プロフィールは誰でも参考可能"on profiles for select using (true);
+create policy "プロフィールを変更"on profiles for select using (true);
+
+--　サインアップ時に、プロフィールテーブル作成する関数
+create function public.handle_new_user()
+returns trigger as $$
+begin 
+insert into public.profiles (id,email)
+varlues (new.id, new.email);
+return new;
+end;
+$$ language plpgsql security definer set search_path = public;
+
+-- サインアップ時にプロフィールテーブル作成する関数を呼び出すトリガー
+create trigger on_auth_user_created
+after insert on auth.users for each row execute procedure public.handle_new_user();
+
+--　プロフィールが画像のstorage作成
+insert into storage.buckets (id, name, public) values ("profiles","profile", true);
+create policy "プロフィール画像は誰でも参加可能" on storege.objects for select using (bucket_id = "profiles" );
+create policy "プロフィール画像はログインユーザーが追加" on storage.objects for insert with check ( bucket_id = 'profile' AND auth.role() = 'authenticated');
+create policy "自分のプロフィール画像を更新"  on storage.objects for update with check ( bucket_id = 'profile' AND auth.uid() = owner );
+create policy "自身のプロフィール画像を削除" on storage.objects for delete using (bucket_id = 'profile' AND auth.uid() = owner )
+
+taoj project
+npx create-next-app@latest . --typescript --eslint

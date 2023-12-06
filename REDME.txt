@@ -35,3 +35,41 @@ create policy "自身のプロフィール画像を削除" on storage.objects fo
 
 taoj project
 npx create-next-app@latest . --typescript --eslint
+
+them thu vien 
+npm i @heroicons/react @hookform/resolvers @supabase/auth-helpers-nextjs @types/uuid encoding react-hook-form uuid zod zustand
+
+chay thu 
+npm run dev
+
+npx supabase login
+npx supabase login
+
+them supabase
+npx supabase init
+
+lien ket supabase 
+npx supabase link --project-ref jcgqzykfybhzodzyycsl generalId ở trang https://supabase.com/dashboard/project/jcgqzykfybhzodzyycsl/settings/general
+
+tạo thư mục library thêm thư viện
+タイプス　クリプトで建築しているので
+npx supabase gen types typescript --linked > lib/database.types.ts
+
+chỉnh sửa link domains trong file next.config.js
+[
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    experimental: {
+        serverActions: true,
+    },
+    images:{
+        domains: ['jcgqzykfybhzodzyycsl.supabase.co']
+    },
+}
+
+module.exports = nextConfig
+]
+
+thêm thư mục middleware.ts
+
+

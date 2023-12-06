@@ -4,8 +4,8 @@
 const Notfound = () =>{
     return ( 
         <div>
-            <div className="text-center text5xl font-blod mb-3">404</div>
-            <div className="text-center textxl font-blod">Not Found</div>
+            <div className="text-center text5xl font-bold mb-3">404</div>
+            <div className="text-center textxl font-bold">Not Found</div>
         </div>
     )
 }

@@ -13,7 +13,7 @@ const {
   data:{ session },
 } = await supabase.auth.getSession()
 
-  return (
+return (
     <div>
       <div className="text-center text-xl">
         {session ? <div>ログイン済</div> : <div>未ログイン</div>}

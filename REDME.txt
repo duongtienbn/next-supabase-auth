@@ -43,12 +43,11 @@ chay thu
 npm run dev
 
 npx supabase login
-npx supabase login
 
-them supabase
+	them supabase
 npx supabase init
 
-lien ket supabase 
+	lien ket supabase 
 npx supabase link --project-ref jcgqzykfybhzodzyycsl generalId ở trang https://supabase.com/dashboard/project/jcgqzykfybhzodzyycsl/settings/general
 
 tạo thư mục library thêm thư viện
@@ -71,5 +70,15 @@ module.exports = nextConfig
 ]
 
 thêm thư mục middleware.ts
+thêm thư mục auth/login/page.tsx
+ trong components
+thêm loginComponents
+
+thêm thư mục auth/signup/page.tsx
+ thêm componets signup.tsx
+
+thêm thư mục store/ tạo filer index.tsx
+
+
 
 

@@ -13,7 +13,7 @@ type Schema = z.infer<typeof schema>
 
 const schema = z.object({
     name: z.string().min(2,{ message: '2文字以上入力する必要があります。'}),
-    email: z.string().email({ message: 'メールアドバイスの形式ではありません。'}),
+    email: z.string().email({ message: 'メールアドレスの形式ではありません。'}),
     password: z.string().min(6,{ message: '6文字以上入力する必要があります。'}),
 })
 
@@ -42,23 +42,23 @@ const SignUp = () =>{
         console.log(data)
         try {
             //サインアップ
-            const { error: errorSignUp } = await supabase.auth.signUp({
+            const { error } = await supabase.auth.signUp({
                 email: data.email,
-                password: data.password,
+				password: data.password,
                 options: {
-                    emailRedirectTo: `${location.origin}/auth/callback`,
-                },
+					emailRedirectTo: `${location.origin}/auth/callback`,
+				},
             })
             
             //エラーチェック
-            if(errorSignUp){
-                setMessage('エラーは発生しました。'+ errorSignUp.message)
+            if(error){
+                setMessage('エラーは発生しました。'+ error.message)
                 return
             }
 
             //プロフィールの名前を更新
             const { error: updateError} = await supabase
-            .from('profilers')
+            .from('profiles')
             .update({name: data.name})
             .eq('email', data.email)
 
@@ -94,11 +94,11 @@ const SignUp = () =>{
                     {...register('name',{required: true})} />
                 </div>
                 <div className="my-3 text-center text-sm text-red-500" >{errors.name?.message}</div>
-                {/* メールアドバイス */}
+                {/* メールアドレス */}
                 <div className="mb-5">
                     <input type="email"
                     className='border rounded-md w-full py-2 px-3 focus:outline-none focus:border-sky-500'
-                    placeholder='メールアドバイス'
+                    placeholder='メールアドレス'
                     id='email'
                     {...register('email',{required: true})} />
                 </div>

@@ -1,10 +1,12 @@
 --　プロフィールテーブルを作成
+mysql -uroot
+
 create table profiles(
   id uuid primary key references auth.users on delete cascade,
   email text not null,
   name text,
   introduce text,
-  avata_url text
+  avatar_url text
 );
 
 -- profilesテーブルRLS検定

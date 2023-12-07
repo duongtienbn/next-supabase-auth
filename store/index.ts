@@ -10,7 +10,7 @@ type StateType = {
 
 const useStore = create<StateType>((set) => ({
     //初期値
-    user: { id: '', email: '', name: '',introduce: '', avata_url: ''},
+    user: { id: '', email: '', name: '',introduce: '', avatar_url: ''},
     setUser: (payload) => set({user: payload}),
 }))
 

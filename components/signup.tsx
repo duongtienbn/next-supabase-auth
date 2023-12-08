@@ -39,7 +39,6 @@ const SignUp = () =>{
         //送信
         const onSubmit: SubmitHandler<Schema> = async (data) => {
         setLoading(true)
-        console.log(data)
         try {
             //サインアップ
             const { error } = await supabase.auth.signUp({

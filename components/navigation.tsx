@@ -3,9 +3,10 @@
 import Link from "next/link";
 import useStore from "@/store";
 import Image from "next/image";
-import { useEffect } from "react";
-import type { Session } from "@supabase/auth-helpers-nextjs";
+import { useEffect, useState } from "react";
+import { createClientComponentClient, type Session } from "@supabase/auth-helpers-nextjs";
 import type { Database } from "@/lib/database.types";
+import { IconBell } from "./icon";
 type ProfileType = Database["public"]["Tables"]["profiles"]["Row"];
 
 // ナビゲーション
@@ -17,6 +18,8 @@ const Navigation = ({
 	profile: ProfileType | null;
 }) => {
 	const { setUser } = useStore();
+	const supabase = createClientComponentClient<Database>();
+	const [message, setMessage] = useState("初期値");
 
 	// 状態管理にユーザー情報を保存
 	// email: session ? session.user.email : "",
@@ -29,7 +32,37 @@ const Navigation = ({
 			avatar_url: session && profile ? profile.avatar_url : "",
 			email: session && profile ? profile.email : "",
 		});
+
 	}, [session, setUser, profile]);
+
+	// プロフィール(notification テーブル)が変更されたら通知を受け取る
+	useEffect(() => {
+		console.log("Navigation useEffect");
+		supabase
+			// .channel("table-db-changes")
+			.channel("schema-db-changes")
+			.on(
+				"postgres_changes",
+				{
+					event: "*",
+					schema: "public",
+					table: "todos",
+					// filter: 'id=eq.1', Lọc các thay đổi cụ thể #
+					// filter: 'body=eq.hey', bang eq
+					// filter: 'body=neq.bye', khong bang neq
+				},
+				(payload) => {
+					console.log(payload);
+					if (payload.new && "task" in payload.new) {
+						console.log(payload);
+						console.log("Fetch", payload.new.task);
+						setMessage(payload.new.task);
+						
+					}
+				}
+			)
+			.subscribe();
+	}, []);
 
 	return (
 		<header className="shadow-lg shadow-gray-100">
@@ -40,6 +73,7 @@ const Navigation = ({
 				<div className="text-sm font-bold">
 					{session ? (
 						<div className="flex flex-nowrap items-center space-x-5">
+							<div className="flex items-center"><IconBell/><div>{message}</div></div>
 							<Link href="/settings/profile" className="flex items-center">
 								<div className="relative w-10 h-10">
 									<Image
@@ -53,7 +87,7 @@ const Navigation = ({
 										fill
 									/>
 								</div>
-                <div>プロフィール</div>
+								<div>プロフィール</div>
 							</Link>
 						</div>
 					) : (

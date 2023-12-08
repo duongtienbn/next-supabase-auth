@@ -88,7 +88,6 @@ const Profile = () => {
         
 		try {
             let avatar_url = user.avatar_url;
-            console.log(user)
 			if (avatar) {
                 // supabaseストレージに画像をアップロード
 				const { data: storageData, error: storageError } =
@@ -96,7 +95,7 @@ const Profile = () => {
                 .from("profile")
                 .upload(`${user.id}/${uuidv4()}`, avatar);
                 
-                console.log(data)
+                // console.log(data)
 				// エラーチェック
 				if (storageError) {
 					setMessage("エラーが発生しました" + storageError.message);
@@ -119,7 +118,6 @@ const Profile = () => {
 				avatar_url = urlData.publicUrl;
 			}
             
-console.log(data);
 			// プロフィールアップデート
 			const { error: updateError } = await supabase
 				.from("profiles")

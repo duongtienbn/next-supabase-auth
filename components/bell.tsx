@@ -1,13 +1,25 @@
-import { IconBell } from "./icon"
+import { useState } from "react";
+import { ArrowUp, IconBell } from "./icon"
+import Notification from "./notification";
 
-const Bell = () => {
-    // const
+const Bell = ({message, date}: any) => {
+    const [toggle, setToggle] = useState<boolean>(false);
+    const handleClick = (e: any) => {
+        e.stopPropagation()
+        setToggle(!toggle);
+    }
     return(
         <div
-        // onClick={}
+        onClick={handleClick}
         >
             <IconBell/>
-
+            {toggle &&
+                <>
+                    <ArrowUp/>
+                    <Notification />
+                    <div>{message}{date}</div>
+                </>
+            }
         </div>
     )
 }

@@ -122,7 +122,7 @@ const Navigation = ({
 										fill
 									/>
 								</div>
-								<div>プロフィール?</div>
+								<div className="hidden md:flex">プロフィール?</div>
 							</Link>
 						</div>
 					) : (

@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
+import TodoCard from "./TodoCard";
 
 export interface Todo {
 	id: string;
@@ -18,7 +18,6 @@ const ToDos = () => {
 		queryKey: ["userToDos"],
 		queryFn: async () => {
 			const { data } = await axios.get("/api/todos");
-			// const { data }:any = await axios.get("/api/message");
 			console.log(data);
 			return data.todos as Todo[];
 		},
@@ -26,11 +25,14 @@ const ToDos = () => {
 
 	if (isLoading) return <div>Loading todos...</div>;
 	if (isError) return <div>There was an error. Reload page.</div>;
-// console.log(data);
-    return <div>
-        {data?.map((todo,index) => (
-            <div key={index}>{todo.title}</div>
-        ))}
-    </div>
-}
+
+	return (
+		<div className="flex flex-col mt-5 w-[300px]">
+			{data?.map((todo, index) => (
+				<TodoCard {...todo} key={index} />
+			))}
+		</div>
+	);
+};
+
 export default ToDos;

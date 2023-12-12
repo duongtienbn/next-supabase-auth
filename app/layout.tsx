@@ -3,6 +3,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import SupabaseListener from "@/components/supabase-listener";
 import TanstackProvider from "@/components/provider/tanstackProvider";
+import Header from "@/components/header";
+import HeaderMobile from "@/components/header-mobile";
+import SideNav from "@/components/side-nav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +23,14 @@ export default function RootLayout({
     <html>
       <TanstackProvider>
         <body className={inter.className}>
-          <div className="flex flex-col min-h-screen">
+          <div className="flex">
+            <SideNav/>
+           <main className="flex-1">
+              <Header/>
+              <HeaderMobile/>
+           </main>
+          </div>
+          <div className="flex flex-col" style={{ minHeight: '93vh' }}>
             <SupabaseListener />
             <main className="flex-1 container max-w-screen-sm mx-auto px-1 py-5">
               {children}

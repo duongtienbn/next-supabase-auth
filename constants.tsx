@@ -15,7 +15,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
 	},
 	{
 		title: "Todo",
-		path: "/todos",
+		path: "/todos/todo",
 		icon: <Icon icon="lucide:mail" width="24" height="24" />,
 	},
 	{
@@ -34,7 +34,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
 		icon: <Icon icon="lucide:settings" width="24" height="24" />,
 		submenu: true,
 		subMenuItems: [
-			{ title: "メールアドレス変更", path: "/settings/email" },
+			{ title: "メールアドレス", path: "/settings/email" },
 			{ title: "パスワード", path: "/settings/password" },
 			{ title: "Account", path: "/settings/account" },
 			{ title: "Privacy", path: "/settings/privacy" },

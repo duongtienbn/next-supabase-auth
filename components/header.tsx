@@ -9,6 +9,9 @@ import useScroll from "@/hooks/use-scroll";
 import { cn } from "@/lib/utils";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { createClient } from "@supabase/supabase-js";
+import { Language } from "./icon";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+
 
 const supabase = createClient(
 	process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -59,13 +62,21 @@ const Header = () => {
 						<span className="font-bold text-xl flex ">Logo</span>
 					</Link>
 				</div>
-				{/* <div className="hidden md:block"> */}
 				<div className="hidden md:flex">
 					<div className="h-8 w-50 rounded-full bg-zinc-300 flex items-center justify-center text-center">
-						{/* {message} */}
-						{/* <span className="font-semibold text-sm">
-							<Icon icon="mdi:bell-outline" width="24" height="24" />
-						</span> */}
+					</div>
+					<div className="h-8 w-8 rounded-full bg-zinc-300 flex items-center justify-center text-center mr-3">
+						<span className="font-semibold text-sm">
+							<DropdownMenu>
+								<DropdownMenuTrigger>
+									<Language/>
+								</DropdownMenuTrigger>
+								<DropdownMenuContent className="p-2 bg-slate-100">
+									<DropdownMenuItem>English</DropdownMenuItem>
+									<DropdownMenuItem>Japan</DropdownMenuItem>
+								</DropdownMenuContent>
+							</DropdownMenu>
+							</span>
 					</div>
 					<div className="h-8 w-8 rounded-full bg-zinc-300 flex items-center justify-center text-center">
 						<span className="font-semibold text-sm">HQ</span>

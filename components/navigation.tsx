@@ -10,6 +10,39 @@ import { IconBell } from "./icon";
 import Bell from "./bell";
 type ProfileType = Database["public"]["Tables"]["profiles"]["Row"];
 
+
+export const getTime = (time?: Date) : string | undefined => {
+	if (time) {
+		const currentTime = new Date();
+		const createdAt = new Date(time);
+		const timeDiff = Number(currentTime) - Number(createdAt);
+		const secondsDiff = Math.floor(timeDiff / 1000);
+		const minutesDiff = Math.floor(timeDiff / (1000 * 60));
+		const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
+		const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+		const monthsDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 30));
+		const yearsDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 30 * 12));
+		if (yearsDiff > 0) {
+			return `${yearsDiff == 1 ? '先月' : `${yearsDiff} 年前`}`
+		} else {
+			if (monthsDiff > 0) {
+				return `${monthsDiff == 1 ? '先月' : `${monthsDiff} 月前`}`
+			} else {
+				if (daysDiff > 0) {
+					return `${daysDiff == 1 ? '昨日' : `${daysDiff} 日前`}`
+				} else {
+					if (hoursDiff > 0) {
+						return `${hoursDiff == 1 ? '一時間前' : `${hoursDiff} 時間前`}`
+					} else if (minutesDiff > 0) {
+						return `${minutesDiff == 1 ? '一分前' : `${minutesDiff} 分前`}`
+					} else {
+						return `${secondsDiff <= 1 ? '一秒前' : `${secondsDiff} 秒前`}`
+					}
+				}
+			}
+		}
+	}
+}
 // ナビゲーション
 const Navigation = ({
 	session,
@@ -36,39 +69,7 @@ const Navigation = ({
 		});
 
 	}, [session, setUser, profile]);
-	const getTime = (time?: Date) : string | undefined => {
-        if (time) {
-            const currentTime = new Date();
-            const createdAt = new Date(time);
-            const timeDiff = Number(currentTime) - Number(createdAt);
-            const secondsDiff = Math.floor(timeDiff / 1000);
-            const minutesDiff = Math.floor(timeDiff / (1000 * 60));
-            const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
-            const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-            const monthsDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 30));
-            const yearsDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24 * 30 * 12));
-            if (yearsDiff > 0) {
-                return `${yearsDiff == 1 ? '先月' : `${yearsDiff} 年前`}`
-            } else {
-                if (monthsDiff > 0) {
-                    return `${monthsDiff == 1 ? '先月' : `${monthsDiff} 月前`}`
-                } else {
-                    if (daysDiff > 0) {
-                        return `${daysDiff == 1 ? '昨日' : `${daysDiff} 日前`}`
-                    } else {
-                        if (hoursDiff > 0) {
-                            return `${hoursDiff == 1 ? '一時間前' : `${hoursDiff} 時間前`}`
-                        } else if (minutesDiff > 0) {
-                            return `${minutesDiff == 1 ? '一分前' : `${minutesDiff} 分前`}`
-                        } else {
-                            return `${secondsDiff <= 1 ? '一秒前' : `${secondsDiff} 秒前`}`
-                        }
-                    }
-                }
-            }
-        }
-    }
-	let dateTime = Date;
+	
 	// プロフィール(notification テーブル)が変更されたら通知を受け取る
 	useEffect(() => {
 		console.log("Navigation useEffect");
@@ -80,7 +81,8 @@ const Navigation = ({
 				{
 					event: "*",
 					schema: "public",
-					table: "todos",
+					// table: "todos",
+					// table: "todos",
 					// filter: 'id=eq.1', Lọc các thay đổi cụ thể #
 					// filter: 'body=eq.hey', bang eq
 					// filter: 'body=neq.bye', khong bang neq
@@ -96,9 +98,11 @@ const Navigation = ({
 					}
 				}
 			)
-			.subscribe();
+			// .subscribe();
 	}, []);
-
+console.log('====================================');
+console.log(message);
+console.log('====================================');
 	return (
 		<header className="shadow-lg shadow-gray-100">
 			<div className="py-5 container max-w-screen-sm mx-auto flex items-center justify-between">

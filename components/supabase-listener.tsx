@@ -2,7 +2,6 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Navigation from "./navigation";
 import type { Database } from "@/lib/database.types";
-import { log } from "console";
 
 //確認状態の監視　かんし
 const SupabaseListener = async () => {

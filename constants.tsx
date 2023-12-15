@@ -16,17 +16,17 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
 	{
 		title: "Todo",
 		path: "/todos/todo",
-		icon: <Icon icon="lucide:mail" width="24" height="24" />,
+		icon: <Icon icon="ri:todo-line" width="24" height="24" />,
 	},
 	{
 		title: "プロフィール",
 		path: "/settings/profile",
-		icon: <Icon icon="lucide:mail" width="24" height="24" />,
+		icon: <Icon icon="mingcute:profile-line" width="24" height="24" />,
 	},
 	{
-		title: "Messages",
-		path: "/messages",
-		icon: <Icon icon="lucide:mail" width="24" height="24" />,
+		title: "ユーザー一覧",
+		path: "/settings/users-list",
+		icon: <Icon icon="mdi:user-outline" width="24" height="24" />,
 	},
 	{
 		title: "Settings",

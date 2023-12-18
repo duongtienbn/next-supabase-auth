@@ -8,6 +8,8 @@ import { usePathname } from "next/navigation";
 import { SIDENAV_ITEMS } from "@/constants";
 import { SideNavItem } from "@/constants";
 import { Icon } from "@iconify/react";
+import { LocaleStore } from "@/store/language";
+import { translate } from "@/lib/dictionary";
 
 const SideNav = () => {
 	return (
@@ -34,6 +36,7 @@ const SideNav = () => {
 export default SideNav;
 
 const MenuItem = ({ item }: { item: SideNavItem }) => {
+	const { locale } = LocaleStore()
 	const pathname = usePathname();
 	const [subMenuOpen, setSubMenuOpen] = useState(false);
 	const toggleSubMenu = () => {
@@ -53,7 +56,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
 						<div className="flex flex-row space-x-4 items-center">
 							{item.icon}
 							<span className="font-semibold text-xl  flex">
-								{item.title}
+							{translate(item.title, locale)}
 							</span>
 						</div>
 
@@ -68,12 +71,12 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
 								return (
 									<Link
 										key={idx}
-										href={subItem.path}
+										href={subItem.path + "?lang=" + locale}
 										className={`${
 											subItem.path === pathname  && 'bg-sky-100 text-sky-500'}
 											hover:bg-sky-100 px-3 py-2 rounded-full`}
 									>
-										<span>{subItem.title}</span>
+										<span>{translate(subItem.title, locale)}</span>
 									</Link>
 								);
 							})}
@@ -82,13 +85,13 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
 				</>
 			) : (
 				<Link
-					href={item.path}
+					href={item.path + "?lang=" + locale}
 					className={`flex flex-row space-x-4 items-center p-2 rounded-lg hover:bg-zinc-100 ${
 						item.path === pathname ? "bg-zinc-100" : ""
 					}`}
 				>
 					{item.icon}
-					<span className="font-semibold text-xl flex">{item.title}</span>
+					<span className="font-semibold text-xl flex">{translate(item.title, locale)}</span>
 				</Link>
 			)}
 		</div>

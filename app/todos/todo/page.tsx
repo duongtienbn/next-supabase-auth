@@ -19,7 +19,7 @@ const ToDos = () => {
     queryFn: async () => {
       const { data } = await axios.get("/api/todos");
       // const { data }:any = await axios.get("/api/message");
-      console.log(data);
+      // console.log(data);
       return data.todos as Todo[];
     },
   });

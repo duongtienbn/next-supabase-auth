@@ -33,7 +33,8 @@ export const getTime = (time?: Date) : string | undefined => {
     }
   }
 }
-export default async function Users() {
+export default async function Users({searchParams,}:{searchParams:{[key: string]: string, lang: "en" | "jp" };}) {
+  const lang = searchParams.lang || "en"
   const prisma = new PrismaClient();
   const users = await prisma.user.findMany();
   //change createAt
@@ -41,9 +42,10 @@ export default async function Users() {
     const time = new Date(user.createdAt);
     return {
       ...user,
-      createdAt: getTime(time)
+      createdAt: time
+      // createdAt: getTime(time)
     }
   })
 
-  return <UsersList userList={modifiedUsers}/>;
+  return <UsersList userList={modifiedUsers} lang={lang}/>;
 }

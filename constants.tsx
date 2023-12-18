@@ -9,36 +9,36 @@ export type SideNavItem = {
 };
 export const SIDENAV_ITEMS: SideNavItem[] = [
 	{
-		title: "Home",
+		title: "home",
 		path: "/",
 		icon: <Icon icon="lucide:home" width="24" height="24" />,
 	},
 	{
-		title: "Todo",
+		title: "todo",
 		path: "/todos/todo",
 		icon: <Icon icon="ri:todo-line" width="24" height="24" />,
 	},
 	{
-		title: "プロフィール",
+		title: "profile",
 		path: "/settings/profile",
 		icon: <Icon icon="mingcute:profile-line" width="24" height="24" />,
 	},
 	{
-		title: "ユーザー一覧",
+		title: "users",
 		path: "/settings/users-list",
 		icon: <Icon icon="mdi:user-outline" width="24" height="24" />,
 	},
 	{
-		title: "Settings",
+		title: "settings",
 		path: "/settings",
 		icon: <Icon icon="lucide:settings" width="24" height="24" />,
 		submenu: true,
 		subMenuItems: [
-			{ title: "メールアドレス", path: "/settings/email" },
-			{ title: "パスワード", path: "/settings/password" },
+			{ title: "email", path: "/settings/email" },
+			{ title: "password", path: "/settings/password" },
 			{ title: "Account", path: "/settings/account" },
 			{ title: "Privacy", path: "/settings/privacy" },
-			{ title: "ログアウト", path: "/settings/logout" },
+			{ title: "logout", path: "/settings/logout" },
 		],
 	},
 	{

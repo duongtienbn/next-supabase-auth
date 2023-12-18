@@ -30,7 +30,7 @@ export async function DELETE(request: NextRequest) {
 
 export async function GET() {
 	try {
-		console.log("GETsdad")
+		// console.log("GETsdad")
 		const todos = await prisma.todo.findMany({
 			orderBy: {
 				createdAt: "desc",

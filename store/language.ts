@@ -1,20 +1,23 @@
-import { Language } from './../components/icon';
-import {create} from 'zustand'
+import { create } from 'zustand'
+import { devtools, persist } from 'zustand/middleware'
 
 interface LocaleState {
-    Language:{
-        lang:'en'|'ja'
-    }
-    updateLang: (locale:'en'|'ja') => void,
-  }
-  
-  const storedLang = localStorage.getItem('locale');
-// check nếu storage có data không? 
+  locale:'en'|'jp';
+  changeLocale: (locale:'en'|'jp') => void,
+}
 
-// check nếu storage có data không? 
-const lang: "jp" | "en" = (storedLang === "jp" || storedLang === "en") ? storedLang : "en";
 
-// export const userStore = create<LocaleState>((set)=>({
-//     Language:{ lang: storedLang }
-
-// }))
+export const LocaleStore = create<LocaleState>()(
+  devtools(
+    persist(
+      (set) => ({
+        locale:'en',
+        changeLocale: (locale:'en'|'jp') => {
+          set(() => ({ locale }))},
+      }),
+      {
+        name: 'locale-storage',
+      },
+    ),
+  ),
+)

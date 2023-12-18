@@ -74,14 +74,14 @@ const Navigation = ({
 	useEffect(() => {
 		console.log("Navigation useEffect");
 		supabase
-			// .channel("table-db-changes")
-			.channel("schema-db-changes")
+			.channel("table-db-changes")
+			// .channel("schema-db-changes")
 			.on(
 				"postgres_changes",
 				{
 					event: "*",
 					schema: "public",
-					// table: "todos",
+					table: "todos",
 					// table: "todos",
 					// filter: 'id=eq.1', Lọc các thay đổi cụ thể #
 					// filter: 'body=eq.hey', bang eq
@@ -100,9 +100,6 @@ const Navigation = ({
 			)
 			// .subscribe();
 	}, []);
-console.log('====================================');
-console.log(message);
-console.log('====================================');
 	return (
 		<header className="shadow-lg shadow-gray-100">
 			<div className="py-5 container max-w-screen-sm mx-auto flex items-center justify-between">

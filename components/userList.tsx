@@ -9,13 +9,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { translate } from "@/lib/dictionary";
 interface User {
     id: string;
     firstName: string;
     lastName: string;
     createdAt: any;
   }
-export default function UsersList(props: { userList: User[] }) {
+export default function UsersList(props: { userList: User[],lang:"en" | "jp"}) {
   let i = 1;
   return (
     <div>
@@ -24,9 +25,9 @@ export default function UsersList(props: { userList: User[] }) {
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">#</TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead className="text-right">createdAt</TableHead>
+            <TableHead>{translate('user_page.name',props.lang)}</TableHead>
+            <TableHead>{translate('user_page.email',props.lang)}</TableHead>
+            <TableHead className="text-right">{translate('user_page.created_at',props.lang)}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -35,8 +36,8 @@ export default function UsersList(props: { userList: User[] }) {
               <TableCell className="font-medium">{i++}</TableCell>
               <TableCell>{`${item.firstName} ${item.lastName}`}</TableCell>
               <TableCell>{item.email}</TableCell>
-              {/* <TableCell className="text-right">{new Date(item.createdAt).toISOString()}</TableCell> */}
-              <TableCell className="text-right">{item.createdAt}</TableCell>
+              <TableCell className="text-right">{new Date(item.createdAt).toISOString()}</TableCell>
+              {/* <TableCell className="text-right">{item.createdAt}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>

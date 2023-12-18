@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { usePathname, useRouter, useSelectedLayoutSegment } from "next/navigation";
 
 import useScroll from "@/hooks/use-scroll";
 import { cn } from "@/lib/utils";
-import { Icon } from "@iconify/react/dist/iconify.js";
+// import { Icon } from "@iconify/react/dist/iconify.js";
 import { createClient } from "@supabase/supabase-js";
 import { Language } from "./icon";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-
+import { LocaleStore } from "@/store/language";
 
 const supabase = createClient(
 	process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -19,10 +19,17 @@ const supabase = createClient(
 );
 
 const Header = () => {
+	const router = useRouter()
+	const url = usePathname();
 	const scrolled = useScroll(5);
 	const selectedLayout = useSelectedLayoutSegment();
 	const [message, setMessage] = useState("初期値");
-
+	const { changeLocale, locale } = LocaleStore()
+	const [mainLocale, setLocale] = useState<any>('English');
+	const changeLang = (lang: "en" | "jp") => {
+		changeLocale(lang)
+		router.push(url + '?lang=' + lang);
+	}
 	const channelA = supabase
 		.channel("schema-db-changes")
 		.on(
@@ -40,7 +47,10 @@ const Header = () => {
 			}
 		)
 		.subscribe();
-
+useEffect(() => {
+	const localizedText = locale === 'en' ? 'English' : 'Japanese';
+	setLocale(localizedText)
+}),[]
 	return (
 		<div
 			className={cn(
@@ -65,14 +75,15 @@ const Header = () => {
 						<span className="font-semibold text-sm">
 							<DropdownMenu>
 								<DropdownMenuTrigger>
-									<Language/>
+									<h1>{mainLocale}</h1>
+									<Language />
 								</DropdownMenuTrigger>
 								<DropdownMenuContent className="p-2 bg-slate-100">
-									<DropdownMenuItem>English</DropdownMenuItem>
-									<DropdownMenuItem>Japan</DropdownMenuItem>
+									<DropdownMenuItem onClick={() => changeLang('en')}>English</DropdownMenuItem>
+									<DropdownMenuItem onClick={() => changeLang('jp')}>Japan</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>
-							</span>
+						</span>
 					</div>
 				</div>
 				<div className=" hidden md:flex  pr-5">
@@ -80,14 +91,15 @@ const Header = () => {
 						<span className="font-semibold text-sm">
 							<DropdownMenu>
 								<DropdownMenuTrigger>
-									<Language/>
+									<h1>{mainLocale}</h1>
+									<Language />
 								</DropdownMenuTrigger>
 								<DropdownMenuContent className="p-2 bg-slate-100">
-									<DropdownMenuItem>English</DropdownMenuItem>
-									<DropdownMenuItem>Japan</DropdownMenuItem>
+									<DropdownMenuItem onClick={() => changeLang('en')}>English</DropdownMenuItem>
+									<DropdownMenuItem onClick={() => changeLang('jp')}>Japan</DropdownMenuItem>
 								</DropdownMenuContent>
 							</DropdownMenu>
-							</span>
+						</span>
 					</div>
 					<div className="h-8 w-8 rounded-full bg-zinc-300 items-center justify-center text-center hidden custom-lg:flex">
 						<span className="font-semibold text-sm">HQ</span>

@@ -11,7 +11,8 @@ import { Icon } from "@iconify/react";
 import { LocaleStore } from "@/store/language";
 import { translate } from "@/lib/dictionary";
 
-const SideNav = () => {
+const SideNav = ({searchParams,}:{searchParams:{[key: string]: string, lang: "en" | "jp" };}) => {
+	const lang = searchParams.lang || "en"
 	return (
 		<div className="md:w-60 bg-white h-screen flex-1 fixed border-r border-zinc-200 hidden custom-lg:flex">
 			<div className="flex flex-col space-y-6 w-full">
@@ -35,14 +36,20 @@ const SideNav = () => {
 
 export default SideNav;
 
-const MenuItem = ({ item }: { item: SideNavItem }) => {
+const MenuItem = ({ item }: { item: SideNavItem,searchParams:{[key: string]: string, lang: "en" | "jp" }; }) => {
+	const lang = searchParams.lang || "en"
 	const { locale } = LocaleStore()
 	const pathname = usePathname();
 	const [subMenuOpen, setSubMenuOpen] = useState(false);
 	const toggleSubMenu = () => {
 		setSubMenuOpen(!subMenuOpen);
 	};
+	item.subMenuItems?.map((subItem, idx) => {
 
+		console.log('====================================');
+		console.log(subItem.title);
+		console.log('====================================');
+})
 	return (
 		<div className="">
 			{item.submenu ? (
@@ -56,7 +63,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
 						<div className="flex flex-row space-x-4 items-center">
 							{item.icon}
 							<span className="font-semibold text-xl  flex">
-							{translate(item.title, locale)}
+							{/* {translate(item.title, locale)} */}
 							</span>
 						</div>
 
@@ -76,7 +83,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
 											subItem.path === pathname  && 'bg-sky-100 text-sky-500'}
 											hover:bg-sky-100 px-3 py-2 rounded-full`}
 									>
-										<span>{translate(subItem.title, locale)}</span>
+										{/* {translate(subItem.title, locale)} */}
 									</Link>
 								);
 							})}
@@ -86,12 +93,12 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
 			) : (
 				<Link
 					href={item.path + "?lang=" + locale}
-					className={`flex flex-row space-x-4 items-center p-2 rounded-lg hover:bg-zinc-100 ${
-						item.path === pathname ? "bg-zinc-100" : ""
-					}`}
+					className={`flex flex-row space-x-4 items-center p-2 rounded-lg hover:bg-zinc-100 ${item.path === pathname ? "bg-zinc-100" : ""
+						}`}
 				>
 					{item.icon}
-					<span className="font-semibold text-xl flex">{translate(item.title, locale)}</span>
+					aa
+					{/* <span className="font-semibold text-xl flex">{translate(item.title, locale)}</span> */}
 				</Link>
 			)}
 		</div>

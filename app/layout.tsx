@@ -6,7 +6,7 @@ import TanstackProvider from "@/components/provider/tanstackProvider";
 import Header from "@/components/header";
 import HeaderMobile from "@/components/header-mobile";
 import SideNav from "@/components/side-nav";
-
+import { ClerkProvider } from "@clerk/nextjs"
 const notoSansJp = Noto_Sans_JP({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,6 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    // thêm để thực hiện đăng nhập bằng github
+    <ClerkProvider> 
     <html>
       <TanstackProvider>
         <body className={notoSansJp.className}>
@@ -44,5 +46,6 @@ export default function RootLayout({
         </body>
       </TanstackProvider>
     </html>
+    </ClerkProvider>
   );
 }
